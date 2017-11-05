@@ -14,10 +14,8 @@ import messages
 import cryptotools
 
 PING_INTERVAL = 1200.0 # 20 min = 1200.0
-BOOTSTRAP_NODES = ["localhost:5008",
-                  "localhost:5007",
-                  "localhost:5006",
-                  "localhost:5005"]
+BOOTSTRAP_NODES = ["138.68.94.33:9000",
+                      "127.0.0.1:9000"]
 
 def _print(*args):
     time = datetime.now().time().isoformat()[:8]
