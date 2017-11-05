@@ -1,4 +1,4 @@
-import sys
+import sys,uuid
 from datetime import datetime
 from time import time
 from functools import partial
@@ -11,7 +11,7 @@ from twisted.internet.error import CannotListenError
 from twisted.internet.task import LoopingCall
 
 import messages
-import cryptotools
+
 
 PING_INTERVAL = 1200.0 # 20 min = 1200.0
 BOOTSTRAP_NODES = ["138.68.94.33:9000",
@@ -29,7 +29,7 @@ class NCProtocol(Protocol):
         self.VERSION = 0
         self.remote_nodeid = None
         self.kind = kind
-        self.nodeid = self.factory.nodeid
+        self.nodeid = uuid.getnode()
         self.lc_ping = LoopingCall(self.send_PING)
         self.message = partial(messages.envelope_decorator, self.nodeid)
 
@@ -179,7 +179,7 @@ class NCFactory(Factory):
     def startFactory(self):
         self.peers = {}
         self.numProtocols = 0
-        self.nodeid = cryptotools.generate_nodeid()[:10]
+        self.nodeid = uuid.getnode()
         _print(" [ ] NODEID:", self.nodeid)
 
     def stopFactory(self):
